@@ -94,7 +94,7 @@ async function decompressSave(file, mapping) {
     tell += 4 + 4 + 4 + 4 + compressedSize;
   } while (tell < size);
 
-  // Clean up decoded text, json beautify and download
+  // Clean up decoded text
   let parsedJson;
   try {
     parsedJson = JSON.parse(decodedText);
