@@ -35,6 +35,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update Mapping
-
-      - name: Build and Deploy
-        uses: ./.github/workflows/deploy.yml
