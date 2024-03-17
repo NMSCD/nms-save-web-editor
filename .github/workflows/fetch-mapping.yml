@@ -28,7 +28,7 @@ jobs:
       - name: Fetch Mapping
         run: |
           deno run --allow-write --allow-net ./.github/workflows/fetchMapping.ts
-          mkdir src/assets
+          mkdir -p src/assets
           mv ./mapping.json ./src/assets/mapping.json
 
       - name: Commit Mapping to Repo
