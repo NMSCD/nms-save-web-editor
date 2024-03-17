@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  fetch:
     runs-on: ubuntu-latest
 
     steps:
