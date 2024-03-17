@@ -1,3 +1,5 @@
-# No Man's Sky Expedition Generator
+# NMS-Save-Editor
 
-Customized No Man's Sky SEASON_DATA_CACHE.JSON files generated via JavaScript
+WIP online save editor website.
+
+Huge thanks to [cwmonkey](https://github.com/cwmonkey) for getting the decompression to work!
