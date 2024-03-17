@@ -4,12 +4,15 @@ import { Mapping } from './assets/mapping.json';
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const saveData = ref(null);
+const isDecompressing = ref(false);
 
 async function decodeSave() {
   const file = fileInput.value?.files?.[0];
   if (!file) return;
+  isDecompressing.value = true;
   const decompressedSave = await decompressSave(file, Mapping);
   saveData.value = decompressedSave;
+  isDecompressing.value = false;
   console.log('success!');
   downloadFile(JSON.stringify(decompressedSave, null, 2), `${file.name}.json`);
 }
@@ -32,5 +35,10 @@ function downloadFile(data, fileName) {
     ref="fileInput"
     type="file"
   />
-  <button @click="decodeSave">Decompress</button>
+  <button
+    :disabled="isDecompressing"
+    @click="decodeSave"
+  >
+    Decompress
+  </button>
 </template>
