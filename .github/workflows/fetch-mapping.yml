@@ -36,4 +36,4 @@ jobs:
           commit_message: Update Mapping
 
       - name: Build and Deploy
-        uses: ./deploy.yml
+        uses: .github/workflows/deploy.yml
