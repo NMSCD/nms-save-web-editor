@@ -27,7 +27,7 @@ jobs:
 
       - name: Fetch Mapping
         run: |
-          Deno run --allow-write --allow-net ./fetchMapping.ts
+          deno run --allow-write --allow-net ./fetchMapping.ts
           mv mapping.json src/assets/mapping.json
 
       - name: Commit Mapping to Repo
