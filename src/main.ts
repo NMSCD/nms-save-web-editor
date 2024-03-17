@@ -1,13 +1,11 @@
-import '@/styles/styles.scss';
-import App from './App.vue';
+import '@picocss/pico';
+
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import App from './App.vue';
 
 const app = createApp(App);
 
-// state management, if required
-const pinia = createPinia();
-app.use(pinia);
+app.use(createPinia());
 
-// css selector where the app should be mounted
 app.mount('#app');

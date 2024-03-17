@@ -1,0 +1,41 @@
+name: Fetch Mapping
+
+run-name: Fetch Mapping
+
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "mapping"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: latest
+
+      - name: Fetch Mapping
+        run: |
+          Deno run --allow-write --allow-net ./fetchMapping.ts
+          mv mapping.json src/assets/mapping.json
+
+      - name: Commit Mapping to Repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update Mapping
+
+      - name: Build and Deploy
+        uses: ./deploy.yml
