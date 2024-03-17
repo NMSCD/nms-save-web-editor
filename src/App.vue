@@ -18,7 +18,7 @@ async function decodeSave() {
 }
 
 // chatGPT's version of the file downloader
-function downloadFile(data, fileName) {
+function downloadFile(data: string, fileName: string) {
   const blob = new File([data], fileName, { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
