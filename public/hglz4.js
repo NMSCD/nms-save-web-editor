@@ -85,7 +85,7 @@ async function decompressSave(file, mapping) {
     // Decode the current compressed block
     LZ4.decodeBlock(compressedBlock, uncompressedBlock, 0, compressedSize);
     // Trim the uncompressed block, for reasons
-    uncompressedBlock = uncompressedBlock.slice(0, uncompressedSize);
+    uncompressedBlock = uncompressedBlock.subarray(0, uncompressedSize);
     // Convert uncompressed block to text and append
     const decodedBlockText = uncompressedBlock.toString();
     decodedText += decodedBlockText;
