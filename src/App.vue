@@ -6,7 +6,8 @@ const fileInput = ref<HTMLInputElement | null>(null);
 const saveData = ref(null);
 
 async function decodeSave() {
-  const file = fileInput.value?.files[0];
+  const file = fileInput.value?.files?.[0];
+  if (!file) return;
   const decompressedSave = await decompressSave(file, Mapping);
   saveData.value = decompressedSave;
   console.log('success!');
