@@ -27,8 +27,8 @@ jobs:
 
       - name: Fetch Mapping
         run: |
-          deno run --allow-write --allow-net .github/workflows/fetchMapping.ts
-          mv mapping.json src/assets/mapping.json
+          deno run --allow-write --allow-net ./.github/workflows/fetchMapping.ts
+          mv ./mapping.json ./src/assets/mapping.json
 
       - name: Commit Mapping to Repo
         uses: stefanzweifel/git-auto-commit-action@v5
