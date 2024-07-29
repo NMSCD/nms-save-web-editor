@@ -11,15 +11,15 @@
   },
   "dependencies": {
     "@picocss/pico": "^2.0.6",
-    "pinia": "^2.1.6",
+    "pinia": "^2.2.0",
     "sass": "^1.77.8",
     "vue": "^3.4.34"
   },
   "devDependencies": {
     "@types/node": "^20.14.11",
-    "@vitejs/plugin-vue": "^5.0.5",
+    "@vitejs/plugin-vue": "^5.1.1",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "vite": "^5.3.4",
     "vue-tsc": "^2.0.28"
   }
