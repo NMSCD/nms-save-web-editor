@@ -28,7 +28,6 @@ async function decodeSave(file: File) {
     const decompressedSave = await decompressSave(file, mapping);
     data.value = decompressedSave;
     isDecompressing.value = false;
-    console.log('success!');
   } catch (error) {
     uploadFailed.value = true;
     console.error(error);

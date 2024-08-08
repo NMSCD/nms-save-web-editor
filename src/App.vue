@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import ThemeSwitch from './components/ThemeSwitch.vue';
 import NavBar from './components/NavBar.vue';
+import { useSaveDataStore } from './stores/saveData';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import { toRefs } from 'vue';
+
+const saveDataStore = useSaveDataStore();
+const { data } = storeToRefs(saveDataStore);
+
+const route = useRoute();
+const { name: tab } = toRefs(route);
 </script>
 
 <template>
@@ -19,20 +29,26 @@ import NavBar from './components/NavBar.vue';
         <ThemeSwitch />
       </QToolbar>
 
-      <QTabs align="left">
+      <QTabs
+        v-if="data"
+        align="left"
+      >
         <QRouteTab
-          to="/"
           label="Load/Download"
+          name="loader"
+          to="/"
           exact
         />
         <QRouteTab
-          to="/stats"
           label="Overview"
+          name="stats"
+          to="/stats"
           exact
         />
         <QRouteTab
-          to="/language"
           label="Language"
+          name="language"
+          to="/language"
           exact
         />
       </QTabs>
@@ -40,7 +56,22 @@ import NavBar from './components/NavBar.vue';
 
     <QPageContainer>
       <QPage padding>
-        <RouterView />
+        <QTabPanels
+          v-model="tab"
+          animated
+        >
+          <QTabPanel name="loader">
+            <RouterView />
+          </QTabPanel>
+
+          <QTabPanel name="stats">
+            <RouterView />
+          </QTabPanel>
+
+          <QTabPanel name="language">
+            <RouterView />
+          </QTabPanel>
+        </QTabPanels>
       </QPage>
     </QPageContainer>
   </QLayout>
