@@ -5,12 +5,15 @@ import { useSaveDataStore } from './stores/saveData';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { toRefs } from 'vue';
+import router from './router';
 
 const saveDataStore = useSaveDataStore();
 const { data } = storeToRefs(saveDataStore);
 
 const route = useRoute();
 const { name: tab } = toRefs(route);
+
+const { routes } = router.options;
 </script>
 
 <template>
@@ -29,26 +32,13 @@ const { name: tab } = toRefs(route);
         <ThemeSwitch />
       </QToolbar>
 
-      <QTabs
-        v-if="data"
-        align="left"
-      >
+      <QTabs align="left">
         <QRouteTab
-          label="Load/Download"
-          name="loader"
-          to="/"
-          exact
-        />
-        <QRouteTab
-          label="Overview"
-          name="stats"
-          to="/stats"
-          exact
-        />
-        <QRouteTab
-          label="Language"
-          name="language"
-          to="/language"
+          v-for="tab in routes"
+          :disable="!data && tab.path !== '/'"
+          :label="tab.meta.label"
+          :name="tab.name"
+          :to="tab.path"
           exact
         />
       </QTabs>
@@ -60,15 +50,10 @@ const { name: tab } = toRefs(route);
           v-model="tab"
           animated
         >
-          <QTabPanel name="loader">
-            <RouterView />
-          </QTabPanel>
-
-          <QTabPanel name="stats">
-            <RouterView />
-          </QTabPanel>
-
-          <QTabPanel name="language">
+          <QTabPanel
+            v-for="tab in routes"
+            :name="tab.name"
+          >
             <RouterView />
           </QTabPanel>
         </QTabPanels>
