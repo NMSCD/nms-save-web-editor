@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { Mapping as mapping } from '@/assets/mapping.json';
 import { useSaveDataStore } from '../stores/saveData';
 import { storeToRefs } from 'pinia';
 import type { Mapping } from '@/types/mapping';
-import { QFile } from 'quasar';
+import type { SaveTopLevel } from '../types/save';
 
-declare function decompressSave(file: File, mapping: Mapping): Promise<object | Error>;
+// We're lying to the compiler here, we don't actually check whether the function actually returns a save JSON.
+// But we can assume it does, otherwise this would be very weird. Also checking for proper save structure would be a huge function and would constantly break.
+declare function decompressSave(file: File, mapping: Mapping): Promise<SaveTopLevel | Error>;
 
 const saveDataStore = useSaveDataStore();
 const { data, filename, uploadFailed } = storeToRefs(saveDataStore);
@@ -26,6 +28,7 @@ async function decodeSave(file: File) {
   filename.value = file.name;
   try {
     const decompressedSave = await decompressSave(file, mapping);
+    if (decompressedSave instanceof Error) throw decompressedSave;
     data.value = decompressedSave;
     isDecompressing.value = false;
   } catch (error) {
