@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
+import type { SaveTopLevel } from '../types/save';
 
 // Define state object structure
 interface SaveData {
-  data: object | null;
+  data: SaveTopLevel | null;
   filename: string;
   uploadFailed: boolean;
 }
