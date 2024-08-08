@@ -44,21 +44,25 @@ const { routes } = router.options;
       </QTabs>
     </QHeader>
 
-    <QTabPanels
-      v-model="tab"
-      animated
-    >
-      <QTabPanel
-        v-for="tab in routes"
-        :name="tab.name"
+    <QPageContainer>
+      <QTabPanels
+        v-model="tab"
+        animated
       >
-        <QPageContainer>
-          <QPage padding>
+        <QTabPanel
+          v-for="tab in routes"
+          :name="tab.name"
+          class="no-padding"
+        >
+          <QPage
+            class="q-pa-xl"
+            padding
+          >
             <RouterView />
           </QPage>
-        </QPageContainer>
-      </QTabPanel>
-    </QTabPanels>
+        </QTabPanel>
+      </QTabPanels>
+    </QPageContainer>
   </QLayout>
 </template>
 
