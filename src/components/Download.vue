@@ -17,5 +17,5 @@ function downloadSave() {
 </script>
 
 <template>
-  <button @click="downloadSave">Download</button>
+  <QBtn @click="downloadSave">Download</QBtn>
 </template>

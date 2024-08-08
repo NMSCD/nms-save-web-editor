@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { Mapping as mapping } from '@/assets/mapping.json';
-import { formatTime } from '@/helpers/time';
 import { useSaveDataStore } from '../stores/saveData';
 import { storeToRefs } from 'pinia';
 import type { Mapping } from '@/types/mapping';
+import { QFile } from 'quasar';
 
 declare function decompressSave(file: File, mapping: Mapping): Promise<object | Error>;
 
@@ -14,9 +14,13 @@ const { data, filename, uploadFailed } = storeToRefs(saveDataStore);
 const fileInput = ref<HTMLInputElement | null>(null);
 const isDecompressing = ref(false);
 
-async function decodeSave() {
-  const file = fileInput.value?.files?.[0];
-  if (!file) return;
+const file = ref<File>();
+
+watchEffect(() => {
+  if (file.value) decodeSave(file.value);
+});
+
+async function decodeSave(file: File) {
   isDecompressing.value = true;
   uploadFailed.value = false;
   filename.value = file.name;
@@ -30,23 +34,19 @@ async function decodeSave() {
     console.error(error);
   }
 }
-
-const playTime = computed(() => formatTime(data.value?.CommonStateData.TotalPlayTime));
 </script>
 
 <template>
-  Upload your .hg save file here. Only the newest NMS version is supported.
-  <input
+  <div>Upload your .hg save file here. Only the newest NMS version is supported.</div>
+  <QFile
+    v-model="file"
+    :error="uploadFailed"
+    :loading="isDecompressing"
     accept=".hg"
+    error-message="Something went wrong!"
+    label="Drag'n'Drop or click to Upload Save"
     ref="fileInput"
     type="file"
     @change="decodeSave"
   />
-  <div :aria-busy="isDecompressing"></div>
-  <div
-    v-if="uploadFailed"
-    class="error"
-  >
-    Something went wrong!
-  </div>
 </template>

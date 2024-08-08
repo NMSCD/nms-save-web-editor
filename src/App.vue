@@ -1,22 +1,41 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import Decoder from './components/Decoder.vue';
-import Download from './components/Download.vue';
-import { useSaveDataStore } from './stores/saveData';
-
-const saveDataStore = useSaveDataStore();
-const { data } = storeToRefs(saveDataStore);
+import ThemeSwitch from './components/ThemeSwitch.vue';
 </script>
 
 <template>
-  <header>
-    <h1 class="text-center">NMS Save Web Editor</h1>
-  </header>
-  <Decoder />
-  <template v-if="data">
-    <div>
-      <span>Playtime:</span> <span>{{ data }}</span>
-    </div>
-    <Download />
-  </template>
+  <QLayout view="hHh LpR fff">
+    <QHeader
+      class="bg-primary text-white"
+      elevated
+    >
+      <QToolbar>
+        <NavBar />
+
+        <QToolbarTitle class="text-center">
+          <h1>NMS Save Web Editor</h1>
+        </QToolbarTitle>
+
+        <ThemeSwitch />
+      </QToolbar>
+    </QHeader>
+
+    <QPageContainer>
+      <QPage padding>
+        <RouterView />
+      </QPage>
+    </QPageContainer>
+
+    <QFooter
+      class="bg-grey-8 text-white text-center"
+      elevated
+    >
+      <PageFooter />
+    </QFooter>
+  </QLayout>
 </template>
+
+<style scoped lang="scss">
+h1 {
+  all: unset
+}
+</style>
