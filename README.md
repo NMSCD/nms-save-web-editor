@@ -1,4 +1,4 @@
-# NMS-Save-Editor
+# NMS-Save-Web-Editor
 
 WIP online save editor website.
 
