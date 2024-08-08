@@ -1,53 +1,69 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { Mapping } from './assets/mapping.json';
-import { formatTime } from './helpers/time';
-import { downloadFile } from './helpers/download';
-import { reverseMapKeys } from './helpers/obfuscate';
+import ThemeSwitch from './components/ThemeSwitch.vue';
+import NavBar from './components/NavBar.vue';
+import { useSaveDataStore } from './stores/saveData';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import { toRefs } from 'vue';
+import router from './router';
 
-const fileInput = ref<HTMLInputElement | null>(null);
-const saveData = ref<object>();
-const isDecompressing = ref(false);
-const filename = ref('');
+const saveDataStore = useSaveDataStore();
+const { data } = storeToRefs(saveDataStore);
 
-async function decodeSave() {
-  const file = fileInput.value?.files?.[0];
-  if (!file) return;
-  isDecompressing.value = true;
-  filename.value = file.name;
-  const decompressedSave = await decompressSave(file, Mapping);
-  if (typeof decompressedSave === 'string') return;
-  saveData.value = decompressedSave;
-  isDecompressing.value = false;
-  console.log('success!');
-}
+const route = useRoute();
+const { name: tab } = toRefs(route);
 
-const playTime = computed(() => formatTime(saveData.value?.CommonStateData.TotalPlayTime));
-
-function downloadSave() {
-  if (!saveData.value) return;
-  const obfuscatedJson = reverseMapKeys(saveData.value, Mapping);
-  const stringifiedJson = JSON.stringify(obfuscatedJson);
-  downloadFile(stringifiedJson, filename.value);
-}
+const { routes } = router.options;
 </script>
 
 <template>
-  <input
-    accept=".hg"
-    ref="fileInput"
-    type="file"
-    @change="decodeSave"
-  />
-  <div :aria-busy="isDecompressing"></div>
+  <QLayout view="hHh LpR fff">
+    <QHeader
+      class="bg-primary text-white"
+      elevated
+    >
+      <QToolbar>
+        <NavBar />
 
-  <!-- <pre>{{ saveData }}</pre> -->
+        <QToolbarTitle class="text-center">
+          <h1>NMS Save Web Editor</h1>
+        </QToolbarTitle>
 
-  <template v-if="saveData">
-    <div>
-      <span>Playtime:</span> <span>{{ playTime }}</span>
-    </div>
+        <ThemeSwitch />
+      </QToolbar>
 
-    <button @click="downloadSave">Download</button>
-  </template>
+      <QTabs align="left">
+        <QRouteTab
+          v-for="tab in routes"
+          :disable="!data && tab.path !== '/'"
+          :label="tab.meta.label"
+          :name="tab.name"
+          :to="tab.path"
+          exact
+        />
+      </QTabs>
+    </QHeader>
+
+    <QPageContainer>
+      <QPage padding>
+        <QTabPanels
+          v-model="tab"
+          animated
+        >
+          <QTabPanel
+            v-for="tab in routes"
+            :name="tab.name"
+          >
+            <RouterView />
+          </QTabPanel>
+        </QTabPanels>
+      </QPage>
+    </QPageContainer>
+  </QLayout>
 </template>
+
+<style scoped lang="scss">
+h1 {
+  all: unset;
+}
+</style>

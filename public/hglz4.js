@@ -60,7 +60,7 @@ async function decompressSave(file, mapping) {
       const uncompressedSize = new Uint32Array(data, 8, 4)[0];
 
       if (magicNumber !== 0xfeeda1e5) {
-        reject('Invalid NMS Block, bad file');
+        reject(new Error('Invalid NMS Block, bad file'));
         return;
       }
 
