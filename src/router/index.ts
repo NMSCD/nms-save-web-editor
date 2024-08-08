@@ -10,8 +10,8 @@ const router = createRouter({
       component: SaveLoader,
     },
     {
-      path: '/view',
-      name: 'general',
+      path: '/stats',
+      name: 'stats',
       component: () => import('../pages/GeneralStats.vue'),
     },
   ],

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ThemeSwitch from './components/ThemeSwitch.vue';
+import NavBar from './components/NavBar.vue';
 </script>
 
 <template>
@@ -17,6 +18,24 @@ import ThemeSwitch from './components/ThemeSwitch.vue';
 
         <ThemeSwitch />
       </QToolbar>
+
+      <QTabs align="left">
+        <QRouteTab
+          to="/"
+          label="Load/Download"
+          exact
+        />
+        <QRouteTab
+          to="/stats"
+          label="Overview"
+          exact
+        />
+        <QRouteTab
+          to="/language"
+          label="Language"
+          exact
+        />
+      </QTabs>
     </QHeader>
 
     <QPageContainer>
@@ -24,18 +43,11 @@ import ThemeSwitch from './components/ThemeSwitch.vue';
         <RouterView />
       </QPage>
     </QPageContainer>
-
-    <QFooter
-      class="bg-grey-8 text-white text-center"
-      elevated
-    >
-      <PageFooter />
-    </QFooter>
   </QLayout>
 </template>
 
 <style scoped lang="scss">
 h1 {
-  all: unset
+  all: unset;
 }
 </style>
