@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { Mapping } from './assets/mapping.json';
 
 const fileInput = ref<HTMLInputElement | null>(null);
-const saveData = ref(null);
+const saveData = ref<string>();
 const isDecompressing = ref(false);
 
 async function decodeSave() {
@@ -11,10 +11,10 @@ async function decodeSave() {
   if (!file) return;
   isDecompressing.value = true;
   const decompressedSave = await decompressSave(file, Mapping);
-  saveData.value = decompressedSave;
+  saveData.value = JSON.stringify(decompressedSave, null, 2);
   isDecompressing.value = false;
   console.log('success!');
-  downloadFile(JSON.stringify(decompressedSave, null, 2), `${file.name}.json`);
+  // downloadFile(JSON.stringify(decompressedSave, null, 2), `${file.name}.json`);
 }
 
 // chatGPT's version of the file downloader
@@ -34,11 +34,9 @@ function downloadFile(data: string, fileName: string) {
     accept=".hg"
     ref="fileInput"
     type="file"
+    @change="decodeSave"
   />
-  <button
-    :disabled="isDecompressing"
-    @click="decodeSave"
-  >
-    Decompress
-  </button>
+  <div :aria-busy="isDecompressing"></div>
+
+  <pre>{{ saveData }}</pre>
 </template>
