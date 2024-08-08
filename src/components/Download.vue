@@ -10,6 +10,7 @@ const { data, filename } = storeToRefs(saveDataStore);
 
 function downloadSave() {
   if (!data.value) return;
+  saveDataStore.setCurrentTimeStamp();
   const obfuscatedJson = reverseMapKeys(data.value, mapping);
   const stringifiedJson = JSON.stringify(obfuscatedJson);
   downloadFile(stringifiedJson, filename.value);

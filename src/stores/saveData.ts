@@ -19,5 +19,9 @@ export const useSaveDataStore = defineStore('saveData', {
   getters: {},
 
   // mutate state
-  actions: {},
+  actions: {
+    setCurrentTimeStamp() {
+      this.data.BaseContext.PlayerStateData.TimeStamp = Math.floor(Date.now() / 1000);
+    },
+  },
 });
