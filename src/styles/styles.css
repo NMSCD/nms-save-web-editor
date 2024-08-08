@@ -1,0 +1,11 @@
+html {
+  scrollbar-gutter: stable;
+}
+
+.container {
+  margin-block: 1rem 5rem;
+}
+
+.text-center {
+  text-align: center;
+}

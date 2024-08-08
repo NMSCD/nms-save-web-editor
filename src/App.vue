@@ -9,11 +9,14 @@ const { data } = storeToRefs(saveDataStore);
 </script>
 
 <template>
+  <header>
+    <h1 class="text-center">NMS Save Web Editor</h1>
+  </header>
   <Decoder />
   <template v-if="data">
     <div>
       <span>Playtime:</span> <span>{{ data }}</span>
     </div>
+    <Download />
   </template>
-  <Download />
 </template>
