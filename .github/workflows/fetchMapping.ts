@@ -1,8 +1,8 @@
-type Mapping = { Key: string; Value: string };
+import { Mapping } from "../../src/types/mapping.ts";
 
 interface MappingObject {
   libMBIN_version: string;
-  Mapping: Mapping[];
+  Mapping: Mapping;
 }
 
 const mappingUrl =
