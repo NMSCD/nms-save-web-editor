@@ -1,5 +1,5 @@
 declare global {
-  function decompressSave(file: File, mapping: { Key: string; Value: string }[]);
+  async function decompressSave(file: File, mapping: { Key: string; Value: string }[]): Promise<object | string>;
 }
 
 export {};
