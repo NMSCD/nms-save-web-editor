@@ -18,5 +18,12 @@ function downloadSave() {
 </script>
 
 <template>
-  <QBtn @click="downloadSave">Download</QBtn>
+  <QBtn
+    color="primary"
+    size="lg"
+    no-caps
+    unelevated
+    @click="downloadSave"
+    >Download Edited File</QBtn
+  >
 </template>

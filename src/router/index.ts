@@ -20,6 +20,22 @@ const router = createRouter({
       },
       component: () => import('../pages/GeneralStats.vue'),
     },
+    {
+      path: '/exosuit',
+      name: 'exosuit',
+      meta: {
+        label: 'Exosuit',
+      },
+      component: () => import('../pages/Exosuit.vue'),
+    },
+    {
+      path: '/json',
+      name: 'json',
+      meta: {
+        label: 'JSON Editor',
+      },
+      component: () => import('../pages/RawJsonEditor.vue'),
+    },
   ],
 });
 
