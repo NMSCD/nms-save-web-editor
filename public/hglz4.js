@@ -38,7 +38,6 @@ function readFile(file) {
 
 // Lz4 stuff
 
-const Buffer = require('buffer').Buffer;
 const LZ4 = require('lz4');
 
 // Uploaded file -> json file
@@ -65,16 +64,16 @@ async function decompressSave(file, mapping) {
       }
 
       // Read the current compressed block
-      const compressedBlock = new Buffer.from(data.slice(16));
+      const compressedBlock = new Uint8Array(data, 16);
 
       // Set the uncompressed block up
-      let uncompressedBlock = Buffer.alloc(uncompressedSize);
+      let uncompressedBlock = new Uint8Array(uncompressedSize);
       // Decode the current compressed block
       LZ4.decodeBlock(compressedBlock, uncompressedBlock, 0, compressedSize);
       // Trim the uncompressed block, for reasons
       uncompressedBlock = uncompressedBlock.subarray(0, uncompressedSize);
       // Convert uncompressed block to text and append
-      const decodedBlockText = uncompressedBlock.toString();
+      const decodedBlockText = new TextDecoder().decode(uncompressedBlock);
       decodedText += decodedBlockText;
 
       // Advance the file reader by the number of bytes we have read so far
