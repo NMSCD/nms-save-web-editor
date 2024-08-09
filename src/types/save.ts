@@ -45,6 +45,7 @@ interface PlayerStateData {
   SaveSummary: string;
   DifficultyState: DifficultyState;
   TimeStamp: number;
+  Inventory: Inventory;
   Health: number;
   ShipHealth: number;
   Shield: number;
@@ -66,4 +67,26 @@ interface DifficultyState {
   EasiestUsedPreset: DifficultyPresetType;
   HardestUsedPreset: DifficultyPresetType;
   Settings: { SettingsLocked: boolean };
+}
+
+interface Inventory {
+  Slots: {
+    Type: {
+      InventoryType: 'Substance' | 'Technology' | 'Product';
+    };
+    Id: string;
+    Amount: number;
+    MaxAmount: number;
+    DamageFactor: number;
+    FullyInstalled: boolean;
+    Index: SlotIndex;
+  }[];
+  ValidSlotIndices: SlotIndex[];
+  Width: number;
+  Height: number;
+}
+
+interface SlotIndex {
+  X: number;
+  Y: number;
 }
