@@ -1,15 +1,13 @@
-///////////////////////////////
-// General
-///////////////////////////////
+import type { Mapping, MappingItem } from '@/types/mapping';
 
 // Fix obfuscated save file json keys
-function mapKeys(json, mapping) {
+function mapKeys(json: object, mapping: Mapping): object {
   if (Array.isArray(json)) {
     return json.map((item) => mapKeys(item, mapping));
   } else if (typeof json === 'object' && json !== null) {
     const newJson = {};
     for (const key in json) {
-      const mappedKey = mapping.find((m) => m.Key === key)?.Value;
+      const mappedKey = mapping.find((m: MappingItem) => m.Key === key)?.Value;
       if (mappedKey) {
         newJson[mappedKey] = mapKeys(json[key], mapping);
       } else {
@@ -23,26 +21,27 @@ function mapKeys(json, mapping) {
 }
 
 // File upload reading helper
-function readFile(file) {
+async function readFile(file: File): Promise<ArrayBuffer> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = (event) => resolve(event.target.result);
+    reader.onload = () => {
+      const result = reader.result;
+      if (result instanceof ArrayBuffer) {
+        resolve(result);
+      } else {
+        reject(new Error('Something went wrong!'));
+      }
+    };
     reader.onerror = (error) => reject(error);
     reader.readAsArrayBuffer(file);
   });
 }
 
-///////////////////////////////
-// Save Files
-///////////////////////////////
-
-// Lz4 stuff
-
-const Buffer = require('buffer').Buffer;
-const LZ4 = require('lz4');
-
 // Uploaded file -> json file
-async function decompressSave(file, mapping) {
+export async function decompressSave(file: File, mapping: Mapping) {
+  // require function is supplied by the lz4 package that's loaded by the script tag
+  const { decodeBlock } = require('lz4');
+
   const fileData = await readFile(file);
 
   return new Promise((resolve, reject) => {
@@ -65,16 +64,16 @@ async function decompressSave(file, mapping) {
       }
 
       // Read the current compressed block
-      const compressedBlock = new Buffer.from(data.slice(16));
+      const compressedBlock = new Uint8Array(data, 16);
 
       // Set the uncompressed block up
-      let uncompressedBlock = Buffer.alloc(uncompressedSize);
+      let uncompressedBlock = new Uint8Array(uncompressedSize);
       // Decode the current compressed block
-      LZ4.decodeBlock(compressedBlock, uncompressedBlock, 0, compressedSize);
+      decodeBlock(compressedBlock, uncompressedBlock, 0, compressedSize);
       // Trim the uncompressed block, for reasons
       uncompressedBlock = uncompressedBlock.subarray(0, uncompressedSize);
       // Convert uncompressed block to text and append
-      const decodedBlockText = uncompressedBlock.toString();
+      const decodedBlockText = new TextDecoder().decode(uncompressedBlock);
       decodedText += decodedBlockText;
 
       // Advance the file reader by the number of bytes we have read so far
@@ -82,7 +81,7 @@ async function decompressSave(file, mapping) {
     } while (tell < size);
 
     // Clean up decoded text
-    let parsedJson;
+    let parsedJson: object;
     try {
       parsedJson = JSON.parse(decodedText);
     } catch {

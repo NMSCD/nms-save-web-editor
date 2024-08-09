@@ -10,6 +10,7 @@ const { data, filename } = storeToRefs(saveDataStore);
 
 function downloadSave() {
   if (!data.value) return;
+  saveDataStore.setCurrentTimeStamp();
   const obfuscatedJson = reverseMapKeys(data.value, mapping);
   const stringifiedJson = JSON.stringify(obfuscatedJson);
   downloadFile(stringifiedJson, filename.value);
@@ -17,5 +18,13 @@ function downloadSave() {
 </script>
 
 <template>
-  <QBtn @click="downloadSave">Download</QBtn>
+  <QBtn
+    class="q-mt-md"
+    color="primary"
+    size="lg"
+    no-caps
+    unelevated
+    @click="downloadSave"
+    >Download Edited File</QBtn
+  >
 </template>

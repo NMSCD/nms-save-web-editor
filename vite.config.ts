@@ -5,7 +5,7 @@ import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/nms-save-editor/',
+  base: '/nms-save-web-editor/',
   plugins: [
     vue({
       template: { transformAssetUrls },

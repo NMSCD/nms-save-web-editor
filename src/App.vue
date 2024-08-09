@@ -36,8 +36,9 @@ const { routes } = router.options;
         <QRouteTab
           v-for="tab in routes"
           :disable="!data && tab.path !== '/'"
-          :label="tab.meta.label"
-          :name="tab.name"
+          :key="tab.name"
+          :label="tab.meta?.label"
+          :name="typeof tab.name === 'string' ? tab.name : undefined"
           :to="tab.path"
           exact
         />
@@ -45,19 +46,24 @@ const { routes } = router.options;
     </QHeader>
 
     <QPageContainer>
-      <QPage padding>
-        <QTabPanels
-          v-model="tab"
-          animated
+      <QTabPanels
+        v-model="tab"
+        animated
+      >
+        <QTabPanel
+          v-for="tab in routes"
+          :key="tab.name"
+          :name="tab.name"
+          class="no-padding"
         >
-          <QTabPanel
-            v-for="tab in routes"
-            :name="tab.name"
+          <QPage
+            class="q-pa-xl"
+            padding
           >
             <RouterView />
-          </QTabPanel>
-        </QTabPanels>
-      </QPage>
+          </QPage>
+        </QTabPanel>
+      </QTabPanels>
     </QPageContainer>
   </QLayout>
 </template>

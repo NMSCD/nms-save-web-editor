@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Main from '../pages/SaveLoader.vue';
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    label: string;
+  }
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,6 +25,22 @@ const router = createRouter({
         label: 'Overview',
       },
       component: () => import('../pages/GeneralStats.vue'),
+    },
+    {
+      path: '/exosuit',
+      name: 'exosuit',
+      meta: {
+        label: 'Exosuit',
+      },
+      component: () => import('../pages/Exosuit.vue'),
+    },
+    {
+      path: '/json',
+      name: 'json',
+      meta: {
+        label: 'JSON Editor',
+      },
+      component: () => import('../pages/RawJsonEditor.vue'),
     },
   ],
 });
