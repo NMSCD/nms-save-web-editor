@@ -6,6 +6,8 @@ import { storeToRefs } from 'pinia';
 import type { SaveTopLevel } from '../types/save';
 import { Notify } from 'quasar';
 import { decompressSave } from '../helpers/decoder';
+import { sleep } from '../helpers/sleep';
+import { spinnerWaitTime } from '../variables/spinnerWaitTime';
 
 const saveDataStore = useSaveDataStore();
 const { data, filename } = storeToRefs(saveDataStore);
@@ -23,6 +25,7 @@ async function decodeSave(file: File) {
   isDecompressing.value = true;
   filename.value = file.name;
   try {
+    await sleep(spinnerWaitTime);
     // We're lying to the compiler here, we don't actually check whether the function actually returns a save JSON.
     // But we can assume it does, otherwise this would be very weird. Also checking for proper save structure would be a huge function and would constantly break.
     const decompressedSave = (await decompressSave(file, mapping)) as SaveTopLevel;
@@ -53,5 +56,9 @@ async function decodeSave(file: File) {
     ref="fileInput"
     type="file"
     outlined
+  />
+  <QInnerLoading
+    :showing="isDecompressing"
+    label="Decoding Save..."
   />
 </template>

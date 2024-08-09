@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia';
 import { Dark, Notify, QFile } from 'quasar';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 import { downloadFile } from '../helpers/download';
+import { spinnerWaitTime } from '../variables/spinnerWaitTime';
 
 const saveDataStore = useSaveDataStore();
 const { data, filename } = storeToRefs(saveDataStore);
@@ -54,10 +55,9 @@ watchEffect(() => {
 });
 
 onMounted(() => {
-  const delay = 500;
   setTimeout(() => {
     isPageShown.value = true;
-  }, delay);
+  }, spinnerWaitTime);
 });
 
 const getCurrentEditorJson = () => editor.value?.jsonEditor.get();
