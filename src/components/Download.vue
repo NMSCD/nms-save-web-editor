@@ -19,6 +19,7 @@ function downloadSave() {
 
 <template>
   <QBtn
+    class="q-mt-md"
     color="primary"
     size="lg"
     no-caps

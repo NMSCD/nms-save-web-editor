@@ -7,18 +7,18 @@ import { storeToRefs } from 'pinia';
 const saveDataStore = useSaveDataStore();
 const { data } = storeToRefs(saveDataStore);
 
-const saveName = computed(() => data.value.CommonStateData.SaveName);
-const saveSummary = computed(() => data.value.BaseContext.PlayerStateData.SaveSummary);
-const timeStamp = computed(() => new Date(data.value.BaseContext.PlayerStateData.TimeStamp * 1000).toLocaleString());
+const saveName = computed(() => data.value?.CommonStateData.SaveName);
+const saveSummary = computed(() => data.value?.BaseContext.PlayerStateData.SaveSummary);
+const timeStamp = computed(() => new Date(data.value?.BaseContext.PlayerStateData.TimeStamp * 1000).toLocaleString());
 
-const playTime = computed(() => formatTime(data.value.CommonStateData.TotalPlayTime));
+const playTime = computed(() => formatTime(data.value?.CommonStateData.TotalPlayTime));
 
-const units = computed(() => data.value.BaseContext.PlayerStateData.Units.toLocaleString());
-const nanites = computed(() => data.value.BaseContext.PlayerStateData.Nanites.toLocaleString());
-const quicksilver = computed(() => data.value.BaseContext.PlayerStateData.Specials.toLocaleString());
+const units = computed(() => data.value?.BaseContext.PlayerStateData.Units.toLocaleString());
+const nanites = computed(() => data.value?.BaseContext.PlayerStateData.Nanites.toLocaleString());
+const quicksilver = computed(() => data.value?.BaseContext.PlayerStateData.Specials.toLocaleString());
 
 const currentDifficulty = computed(
-  () => data.value.BaseContext.PlayerStateData.DifficultyState.Preset.DifficultyPresetType
+  () => data.value?.BaseContext.PlayerStateData.DifficultyState.Preset.DifficultyPresetType
 );
 </script>
 
