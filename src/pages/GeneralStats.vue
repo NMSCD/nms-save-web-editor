@@ -9,7 +9,9 @@ const { data } = storeToRefs(saveDataStore);
 
 const saveName = computed(() => data.value?.CommonStateData.SaveName);
 const saveSummary = computed(() => data.value?.BaseContext.PlayerStateData.SaveSummary);
-const timeStamp = computed(() => new Date(data.value?.BaseContext.PlayerStateData.TimeStamp * 1000).toLocaleString());
+const timeStamp = computed(() =>
+  new Date((data.value?.BaseContext.PlayerStateData.TimeStamp ?? 0) * 1000).toLocaleString()
+);
 
 const playTime = computed(() => formatTime(data.value?.CommonStateData.TotalPlayTime));
 

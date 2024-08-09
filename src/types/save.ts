@@ -45,7 +45,8 @@ interface PlayerStateData {
   SaveSummary: string;
   DifficultyState: DifficultyState;
   TimeStamp: number;
-  Inventory: Inventory;
+  Inventory: Inventory<'Substance' | 'Product'>;
+  Inventory_TechOnly: Inventory<'Technology'>;
   Health: number;
   ShipHealth: number;
   Shield: number;
@@ -69,10 +70,10 @@ interface DifficultyState {
   Settings: { SettingsLocked: boolean };
 }
 
-interface Inventory {
+interface Inventory<T> {
   Slots: {
     Type: {
-      InventoryType: 'Substance' | 'Technology' | 'Product';
+      InventoryType: T;
     };
     Id: string;
     Amount: number;
@@ -82,6 +83,7 @@ interface Inventory {
     Index: SlotIndex;
   }[];
   ValidSlotIndices: SlotIndex[];
+  SpecialSlots?: SpecialSlot[];
   Width: number;
   Height: number;
 }
@@ -89,4 +91,11 @@ interface Inventory {
 interface SlotIndex {
   X: number;
   Y: number;
+}
+
+export interface SpecialSlot {
+  Type: {
+    InventorySpecialSlotType: 'Broken' | 'TechOnly' | 'Cargo' | 'BlockedByBrokenTech' | 'TechBonus';
+  };
+  Index: SlotIndex;
 }
