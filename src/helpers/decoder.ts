@@ -39,6 +39,7 @@ async function readFile(file: File): Promise<ArrayBuffer> {
 
 // Uploaded file -> json file
 export async function decompressSave(file: File, mapping: Mapping) {
+  // require function is supplied by the lz4 package that's loaded by the script tag
   const { decodeBlock } = require('lz4');
 
   const fileData = await readFile(file);
