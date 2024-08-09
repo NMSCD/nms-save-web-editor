@@ -23,7 +23,7 @@ function mapKeys(json, mapping) {
 }
 
 // File upload reading helper
-function readFile(file) {
+async function readFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => resolve(event.target.result);
