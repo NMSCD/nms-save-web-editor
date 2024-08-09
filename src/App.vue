@@ -36,6 +36,7 @@ const { routes } = router.options;
         <QRouteTab
           v-for="tab in routes"
           :disable="!data && tab.path !== '/'"
+          :key="tab.name"
           :label="tab.meta?.label"
           :name="typeof tab.name === 'string' ? tab.name : undefined"
           :to="tab.path"
@@ -51,6 +52,7 @@ const { routes } = router.options;
       >
         <QTabPanel
           v-for="tab in routes"
+          :key="tab.name"
           :name="tab.name"
           class="no-padding"
         >

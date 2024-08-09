@@ -3,7 +3,9 @@ import { storeToRefs } from 'pinia';
 import { useSaveDataStore } from '../stores/saveData';
 import { computed, reactive, ref, watch, watchEffect } from 'vue';
 import { QSelect } from 'quasar';
-import type { SpecialSlot } from '../types/save';
+import SlotEditor from '../components/SlotEditor.vue';
+import { generateSuperchargedSlot, generateValidSlot } from '../helpers/slots';
+import type { CustomSlotData } from '../types/slot';
 
 const saveDataStore = useSaveDataStore();
 const { data } = storeToRefs(saveDataStore);
@@ -46,7 +48,7 @@ const inventoryOptions = [
 ];
 
 // create array with 120 items that have X/Y values according to the exosuit coordinates. They are all inactive for now.
-function generateTemplateArray(context: 'tech' | 'cargo' = selectedInventory.value) {
+function generateTemplateArray(context: 'tech' | 'cargo' = selectedInventory.value): CustomSlotData[] {
   const { width, height } = inventoryMapping[context];
   return Array.from({ length: width * height }, (_element, index) => index).map((item) => ({
     X: Math.round((item / width - Math.floor(item / width)) * width),
@@ -55,10 +57,11 @@ function generateTemplateArray(context: 'tech' | 'cargo' = selectedInventory.val
     item: '',
     amount: 0,
     isSupercharged: false,
+    damageFactor: 0,
   }));
 }
 
-watch(selectedInventory, () => (allSlots.value = generateTemplateArray()));
+watch([selectedInventory, activeInventoryData], () => (allSlots.value = generateTemplateArray()), { deep: true });
 
 const allSlots = ref(generateTemplateArray());
 
@@ -78,6 +81,7 @@ watchEffect(() => {
     if (!slotInArray) return;
     slotInArray.item = item.Id.slice(1);
     slotInArray.amount = item.Amount;
+    slotInArray.damageFactor = item.DamageFactor;
   });
 });
 
@@ -91,18 +95,6 @@ watchEffect(() => {
     }
   );
 });
-
-const generateSuperchargedSlot = (X: number, Y: number): SpecialSlot => ({
-  Type: {
-    InventorySpecialSlotType: 'TechBonus',
-  },
-  Index: {
-    X,
-    Y,
-  },
-});
-
-const generateValidSlot = (X: number, Y: number) => ({ X, Y });
 
 const unlockAllSlots = () => {
   if (!activeInventoryData.value) return;
@@ -149,7 +141,8 @@ const superchargeAllSlots = () => {
   <div class="grid non-selectable">
     <div
       v-for="slot in allSlots"
-      :class="{ active: slot.isActive, super: slot.isSupercharged }"
+      :key="`${slot.X}-${slot.Y}-${slot.item}`"
+      :class="{ active: slot.isActive, super: slot.isSupercharged, broken: slot.damageFactor }"
       class="slot q-pa-xs"
     >
       <span class="row justify-between items-center">
@@ -157,13 +150,10 @@ const superchargeAllSlots = () => {
           v-if="slot.item"
           class="slot-content"
           >{{ slot.item }} x{{ slot.amount }}</span
-        ><QBtn
-          :class="{ 'q-ml-auto': !slot.item }"
-          color="black"
-          icon="settings"
-          size="sm"
-          flat
-          round
+        ><SlotEditor
+          :activeInventoryData
+          :selectedInventory
+          :slot
         />
       </span>
     </div>
@@ -177,15 +167,21 @@ const superchargeAllSlots = () => {
   gap: 0.5rem;
 
   .slot {
+    --slot-border-colour: transparent;
     aspect-ratio: 1;
     background-color: dimgrey;
+    border: 2px solid var(--slot-border-colour);
 
     &.active {
       background-color: lightgrey;
     }
 
     &.super {
-      border: 2px solid yellow;
+      --slot-border-colour: yellow;
+    }
+
+    &.broken {
+      --slot-border-colour: red;
     }
 
     .slot-content {

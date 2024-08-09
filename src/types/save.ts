@@ -70,7 +70,7 @@ interface DifficultyState {
   Settings: { SettingsLocked: boolean };
 }
 
-interface Inventory<T> {
+export interface Inventory<T> {
   Slots: {
     Type: {
       InventoryType: T;
