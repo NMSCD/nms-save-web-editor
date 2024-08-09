@@ -22,22 +22,32 @@ watchEffect(() => {
   if (file.value) {
     const reader = new FileReader();
     reader.onload = () => {
-      const result = reader.result;
-      if (typeof result !== 'string') {
+      try {
+        const result = reader.result;
+        if (typeof result !== 'string') {
+          Notify.create({
+            type: 'negative',
+            message: 'Something went wrong!',
+          });
+          return;
+        }
+
+        const parsedResultJson = JSON.parse(result);
+        data.value = parsedResultJson;
+        Notify.create({
+          type: 'positive',
+          message: 'Import successful!',
+        });
+      } catch (error) {
         Notify.create({
           type: 'negative',
-          message: 'Something went wrong!',
+          message: 'Invalid JSON!',
         });
-        return;
+        console.error(error);
+      } finally {
+        filePicker.value?.removeFile(file.value);
+        filePicker.value?.blur();
       }
-      const parsedResultJson = JSON.parse(result);
-      data.value = parsedResultJson;
-      Notify.create({
-        type: 'positive',
-        message: 'Import successful!',
-      });
-      filePicker.value?.removeFile(file.value);
-      filePicker.value?.blur();
     };
     reader.readAsText(file.value);
   }

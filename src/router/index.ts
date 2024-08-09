@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Main from '../pages/SaveLoader.vue';
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    label: string;
+  }
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

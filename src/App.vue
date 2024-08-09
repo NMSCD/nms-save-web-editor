@@ -36,8 +36,8 @@ const { routes } = router.options;
         <QRouteTab
           v-for="tab in routes"
           :disable="!data && tab.path !== '/'"
-          :label="tab.meta.label"
-          :name="tab.name"
+          :label="tab.meta?.label"
+          :name="typeof tab.name === 'string' ? tab.name : undefined"
           :to="tab.path"
           exact
         />
