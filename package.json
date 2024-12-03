@@ -19,7 +19,7 @@
   "devDependencies": {
     "@quasar/extras": "^1.16.13",
     "@quasar/vite-plugin": "^1.8.1",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.1",
     "@vitejs/plugin-vue": "^5.2.0",
     "@vueuse/core": "^11.3.0",
     "prettier": "^3.4.1",
