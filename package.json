@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@nmscd/coordinate-conversion": "^1.2.4",
-    "json-editor-vue": "^0.17.3",
+    "json-editor-vue": "^0.18.1",
     "pinia": "^3.0.1",
     "vue": "^3.5.13",
     "vuedraggable": "^4.1.0"
