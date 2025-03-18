@@ -23,7 +23,7 @@
     "@vitejs/plugin-vue": "^5.2.3",
     "@vueuse/core": "^13.0.0",
     "prettier": "^3.5.3",
-    "quasar": "^2.18.0",
+    "quasar": "^2.18.1",
     "sass": "^1.85.1",
     "typescript": "^5.8.2",
     "vite": "^6.2.1",
