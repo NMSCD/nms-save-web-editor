@@ -12,7 +12,7 @@
   "dependencies": {
     "@nmscd/coordinate-conversion": "^1.2.4",
     "json-editor-vue": "^0.18.1",
-    "pinia": "^3.0.2",
+    "pinia": "^3.0.3",
     "vue": "^3.5.16",
     "vuedraggable": "^4.1.0"
   },
