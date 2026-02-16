@@ -21,7 +21,7 @@
     "@quasar/vite-plugin": "^1.10.0",
     "@types/node": "^25.2.2",
     "@vitejs/plugin-vue": "^6.0.4",
-    "@vueuse/core": "^14.2.0",
+    "@vueuse/core": "^14.2.1",
     "prettier": "^3.8.1",
     "quasar": "^2.18.6",
     "sass": "^1.97.3",
