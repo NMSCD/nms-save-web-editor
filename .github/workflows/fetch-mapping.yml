@@ -30,7 +30,7 @@ jobs:
           deno run --allow-write --allow-net ./.github/workflows/fetchMapping.ts
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           path: mapping.json
 
