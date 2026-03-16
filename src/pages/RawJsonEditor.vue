@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import JsonEditorVue from 'json-editor-vue';
+import type JsonEditorVue from 'json-editor-vue';
 import 'vanilla-jsoneditor/themes/jse-theme-dark.css';
 import { useSaveDataStore } from '../stores/saveData';
 import { storeToRefs } from 'pinia';
-import { Dark, Notify, QFile } from 'quasar';
+import { type QFile, Dark, Notify } from 'quasar';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 import { downloadFile } from '../helpers/download';
 import { spinnerWaitTime } from '../variables/spinnerWaitTime';

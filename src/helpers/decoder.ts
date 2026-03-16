@@ -32,7 +32,9 @@ async function readFile(file: File): Promise<ArrayBuffer> {
         reject(new Error('Something went wrong!'));
       }
     };
-    reader.onerror = (error) => reject(error);
+    reader.onerror = (error) => {
+      reject(error);
+    };
     reader.readAsArrayBuffer(file);
   });
 }

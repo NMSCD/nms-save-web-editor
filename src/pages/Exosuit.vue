@@ -92,7 +92,7 @@ watchEffect(() => {
       const slotInArray = allSlots.value.find((slot) => slot.X === item.Index.X && slot.Y === item.Index.Y);
       if (!slotInArray) return;
       slotInArray.isSupercharged = true;
-    }
+    },
   );
 });
 
@@ -104,7 +104,7 @@ const unlockAllSlots = () => {
 const superchargeAllSlots = () => {
   if (!techInventoryData.value?.SpecialSlots) return;
   techInventoryData.value.SpecialSlots = generateTemplateArray('tech').map(({ X, Y }) =>
-    generateSuperchargedSlot(X, Y)
+    generateSuperchargedSlot(X, Y),
   );
 };
 </script>

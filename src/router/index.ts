@@ -24,7 +24,7 @@ const router = createRouter({
       meta: {
         label: 'Overview',
       },
-      component: () => import('../pages/GeneralStats.vue'),
+      component: async () => import('../pages/GeneralStats.vue'),
     },
     {
       path: '/exosuit',
@@ -32,7 +32,7 @@ const router = createRouter({
       meta: {
         label: 'Exosuit',
       },
-      component: () => import('../pages/Exosuit.vue'),
+      component: async () => import('../pages/Exosuit.vue'),
     },
     {
       path: '/json',
@@ -40,7 +40,7 @@ const router = createRouter({
       meta: {
         label: 'JSON Editor',
       },
-      component: () => import('../pages/RawJsonEditor.vue'),
+      component: async () => import('../pages/RawJsonEditor.vue'),
     },
   ],
 });

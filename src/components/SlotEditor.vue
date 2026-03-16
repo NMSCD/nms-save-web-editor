@@ -31,7 +31,7 @@ function confirmChanges() {
   }
 
   const activeSlot = props.activeInventoryData?.Slots.find(
-    (item) => item.Index.X === props.slot.X && item.Index.Y === props.slot.Y
+    (item) => item.Index.X === props.slot.X && item.Index.Y === props.slot.Y,
   );
   if (activeSlot) {
     activeSlot.Amount = amount.value;
@@ -53,7 +53,7 @@ function activateSlot() {
 function deactivateSlot() {
   if (!props.activeInventoryData) return;
   props.activeInventoryData.ValidSlotIndices = props.activeInventoryData.ValidSlotIndices.filter(
-    (item) => item.X !== props.slot.X || item.Y !== props.slot.Y
+    (item) => item.X !== props.slot.X || item.Y !== props.slot.Y,
   );
 }
 
@@ -65,7 +65,7 @@ function superchargeSlot() {
 function removeSupercharge() {
   if (!props.activeInventoryData?.SpecialSlots) return;
   props.activeInventoryData.SpecialSlots = props.activeInventoryData.SpecialSlots.filter(
-    (item) => item.Index.X !== props.slot.X || item.Index.Y !== props.slot.Y
+    (item) => item.Index.X !== props.slot.X || item.Index.Y !== props.slot.Y,
   );
 }
 </script>
