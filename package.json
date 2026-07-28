@@ -22,7 +22,7 @@
   "devDependencies": {
     "@quasar/extras": "^2.0.2",
     "@quasar/vite-plugin": "^1.12.0",
-    "@types/node": "^26.1.1",
+    "@types/node": "^26.1.2",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vueuse/core": "^14.3.0",
     "oxfmt": "^0.58.0",
