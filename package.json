@@ -27,7 +27,7 @@
     "@vueuse/core": "^14.4.0",
     "oxfmt": "^0.58.0",
     "oxlint": "^1.79.0",
-    "oxlint-tsgolint": "^0.24.0",
+    "oxlint-tsgolint": "^7.0.2001",
     "quasar": "^2.26.0",
     "sass": "^1.104.0",
     "typescript": "^6.0.3",
