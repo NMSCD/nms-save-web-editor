@@ -23,7 +23,7 @@
     "@quasar/extras": "^2.0.4",
     "@quasar/vite-plugin": "^1.12.0",
     "@types/node": "^26.1.2",
-    "@vitejs/plugin-vue": "^6.0.8",
+    "@vitejs/plugin-vue": "^6.0.9",
     "@vueuse/core": "^14.4.0",
     "oxfmt": "^0.68.0",
     "oxlint": "^1.79.0",
